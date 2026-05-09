@@ -27,7 +27,7 @@ const formatPrice = (precio: number) => {
   data-tema={libro.tema}
 >
   <a href={`/libros/${libro.slug}`} class="block relative">
-    <div class="aspect-[3/4] bg-neutral-100">
+    <div class="aspect-[3/4] bg-neutral-100 overflow-hidden">
       {libro.cover ? (
         <img
           src={libro.cover.src}
@@ -35,7 +35,7 @@ const formatPrice = (precio: number) => {
           loading="lazy"
           width="300"
           height="400"
-          class="w-full h-full object-cover"
+          class="w-full h-full object-contain"
         />
       ) : (
         <BookCardPlaceholder titulo={libro.titulo} autor={libro.autor} anio={libro.anio} />

@@ -1,0 +1,58 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  canonical?: string;
+}
+
+const { title, description, ogImage = '/og-image.png', canonical } = Astro.props;
+const siteUrl = 'https://manuel-cordova.pages.dev';
+const canonicalUrl = canonical ? `${siteUrl}${canonical}` : siteUrl;
+---
+
+<!doctype html>
+<html lang="es-CL">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="author" content="Manuel Córdova" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${siteUrl}${ogImage}`} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-black text-white px-4 py-2 rounded z-50">
+      Saltar al contenido
+    </a>
+    <header class="sticky top-0 z-40 bg-white border-b border-[--color-border]">
+      <div class="max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
+        <nav class="flex items-center justify-between h-16">
+          <a href="/" class="font-semibold text-lg">Biblioteca Manuel Córdova</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+    <footer class="border-t border-[--color-border] py-12 mt-16">
+      <div class="max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <p class="text-sm text-[--color-text-muted]">© {new Date().getFullYear()} Biblioteca Manuel Córdova</p>
+          <p class="text-sm text-[--color-text-soft]">Sitio creado en Astro + Tailwind</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

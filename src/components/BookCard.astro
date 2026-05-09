@@ -1,0 +1,58 @@
+---
+import type { Libro } from '../types';
+import BookCardPlaceholder from './BookCardPlaceholder.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  libro: Libro;
+}
+
+const { libro } = Astro.props;
+
+const formatPrice = (precio: number) => {
+  return new Intl.NumberFormat('es-CL', {
+    style: 'currency',
+    currency: 'CLP',
+    maximumFractionDigits: 0
+  }).format(precio);
+};
+---
+
+<article
+  class="border border-[--color-border] rounded-lg overflow-hidden hover:border-black transition-colors duration-200"
+  data-titulo={libro.titulo.toLowerCase()}
+  data-autor={libro.autor.toLowerCase()}
+  data-anio={libro.anio}
+  data-precio={libro.precio}
+  data-tema={libro.tema}
+>
+  <a href={`/libros/${libro.slug}`} class="block relative">
+    <div class="aspect-[3/4] bg-neutral-100">
+      {libro.cover ? (
+        <img
+          src={libro.cover.src}
+          alt={libro.cover.alt}
+          loading="lazy"
+          width="300"
+          height="400"
+          class="w-full h-full object-cover"
+        />
+      ) : (
+        <BookCardPlaceholder titulo={libro.titulo} autor={libro.autor} anio={libro.anio} />
+      )}
+    </div>
+    {!libro.disponible && (
+      <div class="absolute top-2 right-2 bg-red-500 text-white text-xs font-medium px-2 py-1 rounded">
+        Vendido
+      </div>
+    )}
+  </a>
+  <div class="p-4">
+    <h3 class="font-semibold text-base leading-snug line-clamp-2 mb-1">{libro.titulo}</h3>
+    <p class="text-sm text-[--color-text-muted] mb-2">{libro.autor} · {libro.anio}</p>
+    <div class="flex items-center justify-between">
+      <span class="font-medium">{formatPrice(libro.precio)}</span>
+      <Icon name="arrow-right" size={16} class="text-[--color-text-muted]" />
+    </div>
+  </div>
+</article>

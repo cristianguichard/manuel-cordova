@@ -1,0 +1,46 @@
+---
+import site from '../data/site.json';
+import Icon from './Icon.astro';
+
+interface Props {
+  tituloLibro?: string;
+  codigoLibro?: string;
+  variant?: "stack" | "inline";
+}
+
+const { tituloLibro, codigoLibro, variant = "inline" } = Astro.props;
+const { owner } = site;
+
+const whatsappUrl = tituloLibro
+  ? `https://wa.me/${owner.whatsapp}?text=Hola Manuel, me interesa el libro "${tituloLibro}" (${codigoLibro})`
+  : `https://wa.me/${owner.whatsapp}?text=Hola Manuel, te escribo por tu catálogo de libros`;
+
+const emailSubject = tituloLibro
+  ? `Consulta libro ${codigoLibro} - ${tituloLibro}`
+  : 'Consulta sobre tu catálogo de libros';
+const emailBody = tituloLibro
+  ? `Hola Manuel, me interesa el libro "${tituloLibro}".`
+  : '';
+const emailUrl = `mailto:${owner.email}?subject=${encodeURIComponent(emailSubject)}${emailBody ? `&body=${encodeURIComponent(emailBody)}` : ''}`;
+---
+
+<div class:list={["flex gap-4", variant === "stack" ? "flex-col" : "flex-row"]}>
+  <a
+    href={emailUrl}
+    class="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-md hover:bg-neutral-700 transition-colors focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 min-h-[44px]"
+    aria-label="Enviar email a Manuel"
+  >
+    <Icon name="mail" size={18} />
+    <span>Email</span>
+  </a>
+  <a
+    href={whatsappUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="inline-flex items-center gap-2 bg-[#25d366] text-white px-6 py-3 rounded-md hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-[#25d366] focus:ring-offset-2 min-h-[44px]"
+    aria-label="Contactar por WhatsApp"
+  >
+    <Icon name="whatsapp" size={18} />
+    <span>WhatsApp</span>
+  </a>
+</div>

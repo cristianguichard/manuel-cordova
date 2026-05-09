@@ -1,0 +1,16 @@
+{
+  "owner": {
+    "nombre": "Manuel Córdova",
+    "bio": "MANUEL_BIO_AQUI",
+    "email": "MANUEL_EMAIL_AQUI",
+    "whatsapp": "MANUEL_WHATSAPP_AQUI",
+    "ubicacion": "Chile"
+  },
+  "site": {
+    "nombre": "Biblioteca Manuel Córdova",
+    "tagline": "Libros técnicos seleccionados — Catálogo de venta",
+    "url": "https://manuel-cordova.pages.dev",
+    "moneda": "CLP",
+    "lang": "es-CL"
+  }
+}

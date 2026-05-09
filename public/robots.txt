@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://manuel-cordova.pages.dev/sitemap-index.xml

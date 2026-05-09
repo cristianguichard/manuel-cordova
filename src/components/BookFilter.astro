@@ -1,0 +1,157 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  temas: string[];
+}
+
+const { temas } = Astro.props;
+---
+
+<div class="mb-8 p-4 bg-[--color-bg-subtle] border border-[--color-border] rounded-lg">
+  <div class="mb-4">
+    <div class="relative">
+      <Icon name="search" size={16} class="absolute left-3 top-1/2 -translate-y-1/2 text-[--color-text-muted]" />
+      <input
+        type="text"
+        id="buscador"
+        placeholder="Buscar por título o autor..."
+        class="w-full pl-10 pr-4 py-3 border border-[--color-border] rounded-md focus:outline-none focus:ring-2 focus:ring-black bg-white"
+      />
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-4 items-center">
+    <div class="flex items-center gap-2">
+      <label for="tema" class="text-sm font-medium text-[--color-text-muted]">Tema:</label>
+      <select
+        id="tema"
+        class="px-3 py-2 border border-[--color-border] rounded-md focus:outline-none focus:ring-2 focus:ring-black bg-white"
+      >
+        <option value="">Todos</option>
+        {temas.map(tema => (
+          <option value={tema.toLowerCase()}>{tema}</option>
+        ))}
+      </select>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <label for="desde" class="text-sm font-medium text-[--color-text-muted]">Desde:</label>
+      <input
+        type="number"
+        id="desde"
+        placeholder="Año"
+        min="1900"
+        max="2030"
+        class="w-20 px-3 py-2 border border-[--color-border] rounded-md focus:outline-none focus:ring-2 focus:ring-black bg-white"
+      />
+    </div>
+
+    <div class="flex items-center gap-2">
+      <label for="hasta" class="text-sm font-medium text-[--color-text-muted]">Hasta:</label>
+      <input
+        type="number"
+        id="hasta"
+        placeholder="Año"
+        min="1900"
+        max="2030"
+        class="w-20 px-3 py-2 border border-[--color-border] rounded-md focus:outline-none focus:ring-2 focus:ring-black bg-white"
+      />
+    </div>
+
+    <div class="flex items-center gap-2 ml-auto">
+      <label for="ordenar" class="text-sm font-medium text-[--color-text-muted]">Ordenar:</label>
+      <select
+        id="ordenar"
+        class="px-3 py-2 border border-[--color-border] rounded-md focus:outline-none focus:ring-2 focus:ring-black bg-white"
+      >
+        <option value="anio-desc">Más recientes</option>
+        <option value="anio-asc">Más antiguos</option>
+        <option value="precio-asc">Precio menor a mayor</option>
+        <option value="precio-desc">Precio mayor a menor</option>
+        <option value="titulo-asc">A-Z</option>
+      </select>
+    </div>
+  </div>
+
+  <p id="sin-resultados" class="hidden text-center py-8 text-[--color-text-muted]">
+    Sin libros que coincidan con tu búsqueda
+  </p>
+</div>
+
+<script is:inline>
+(function() {
+  const buscador = document.getElementById('buscador');
+  const temaSelect = document.getElementById('tema');
+  const desdeInput = document.getElementById('desde');
+  const hastaInput = document.getElementById('hasta');
+  const ordenarSelect = document.getElementById('ordenar');
+  const sinResultados = document.getElementById('sin-resultados');
+  const grid = document.getElementById('libros-grid');
+
+  let debounceTimer;
+
+  function filtrarYOrdenar() {
+    const texto = buscador.value.toLowerCase().trim();
+    const tema = temaSelect.value;
+    const desde = parseInt(desdeInput.value) || 0;
+    const hasta = parseInt(hastaInput.value) || 9999;
+    const orden = ordenarSelect.value;
+
+    const articulos = Array.from(grid.querySelectorAll('article'));
+    let visibles = [];
+
+    articulos.forEach(articulo => {
+      const titulo = articulo.dataset.titulo || '';
+      const autor = articulo.dataset.autor || '';
+      const anio = parseInt(articulo.dataset.anio) || 0;
+      const temaArt = articulo.dataset.tema || '';
+
+      const matchTexto = !texto || titulo.includes(texto) || autor.includes(texto);
+      const matchTema = !tema || temaArt.toLowerCase().includes(tema);
+      const matchAnio = anio >= desde && anio <= hasta;
+
+      if (matchTexto && matchTema && matchAnio) {
+        visibles.push(articulo);
+        articulo.style.display = '';
+      } else {
+        articulo.style.display = 'none';
+      }
+    });
+
+    visibles.sort((a, b) => {
+      const anioA = parseInt(a.dataset.anio) || 0;
+      const anioB = parseInt(b.dataset.anio) || 0;
+      const precioA = parseInt(a.dataset.precio) || 0;
+      const precioB = parseInt(b.dataset.precio) || 0;
+      const tituloA = a.dataset.titulo || '';
+      const tituloB = b.dataset.titulo || '';
+
+      switch(orden) {
+        case 'anio-desc': return anioB - anioA;
+        case 'anio-asc': return anioA - anioB;
+        case 'precio-asc': return precioA - precioB;
+        case 'precio-desc': return precioB - precioA;
+        case 'titulo-asc': return tituloA.localeCompare(tituloB, 'es');
+        default: return 0;
+      }
+    });
+
+    visibles.forEach((articulo) => {
+      grid.appendChild(articulo);
+    });
+
+    sinResultados.classList.toggle('hidden', visibles.length > 0);
+  }
+
+  buscador.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(filtrarYOrdenar, 200);
+  });
+
+  temaSelect.addEventListener('change', filtrarYOrdenar);
+  desdeInput.addEventListener('input', filtrarYOrdenar);
+  hastaInput.addEventListener('input', filtrarYOrdenar);
+  ordenarSelect.addEventListener('change', filtrarYOrdenar);
+})();
+</script>

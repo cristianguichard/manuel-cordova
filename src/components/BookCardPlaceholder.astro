@@ -1,0 +1,20 @@
+---
+interface Props {
+  titulo: string;
+  autor: string;
+  anio: number;
+}
+
+const { titulo, autor, anio } = Astro.props;
+---
+
+<div class="aspect-[3/4] bg-gradient-to-br from-neutral-50 to-neutral-200 border border-[--color-border] rounded-lg flex flex-col items-center justify-center p-6 text-center">
+  <div class="flex-1 flex items-center justify-center">
+    <p class="font-serif text-lg leading-tight line-clamp-3 text-[--color-text]">{titulo}</p>
+  </div>
+  <div class="mt-4 pt-4 border-t border-[--color-border] w-full">
+    <p class="font-mono text-xs text-[--color-text-muted]">{anio}</p>
+    <p class="font-mono text-xs text-[--color-text-soft] truncate">{autor}</p>
+  </div>
+  <div class="mt-3 w-8 h-px bg-[--color-border]"></div>
+</div>

@@ -1,0 +1,163 @@
+---
+import Layout from '../../components/Layout.astro';
+import BookCardPlaceholder from '../../components/BookCardPlaceholder.astro';
+import ContactButtons from '../../components/ContactButtons.astro';
+import librosData from '../../data/libros.json';
+import site from '../../data/site.json';
+import type { Libro } from '../../types';
+
+export function getStaticPaths() {
+  return librosData.map(libro => ({
+    params: { slug: libro.slug },
+    props: { libro }
+  }));
+}
+
+const { libro } = Astro.props as { libro: Libro };
+
+const formatPrice = (precio: number) => {
+  return new Intl.NumberFormat('es-CL', {
+    style: 'currency',
+    currency: 'CLP',
+    maximumFractionDigits: 0
+  }).format(precio);
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Book",
+  "name": libro.titulo,
+  "author": { "@type": "Person", "name": libro.autor },
+  "publisher": libro.editorial,
+  "datePublished": libro.anio.toString(),
+  "isbn": libro.isbn,
+  "numberOfPages": libro.paginas,
+  "inLanguage": "es",
+  "offers": {
+    "@type": "Offer",
+    "price": libro.precio,
+    "priceCurrency": "CLP",
+    "availability": libro.disponible
+      ? "https://schema.org/InStock"
+      : "https://schema.org/SoldOut",
+    "seller": { "@type": "Person", "name": "Manuel Córdova" }
+  }
+};
+---
+
+<Layout
+  title={`${libro.titulo} — Biblioteca Manuel Córdova`}
+  description={libro.descripcion}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <section class="py-12 md:py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
+      <a href="/" class="inline-flex items-center gap-2 text-sm text-[--color-text-muted] hover:text-[--color-text] mb-8 transition-colors">
+        ← Volver al catálogo
+      </a>
+
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16">
+        <div class="lg:sticky lg:top-24 lg:self-start">
+          <div class="aspect-[3/4] max-w-md mx-auto">
+            {libro.cover ? (
+              <img
+                src={libro.cover.src}
+                alt={libro.cover.alt}
+                width="400"
+                height="533"
+                class="w-full h-full object-cover rounded-lg"
+              />
+            ) : (
+              <BookCardPlaceholder titulo={libro.titulo} autor={libro.autor} anio={libro.anio} />
+            )}
+          </div>
+        </div>
+
+        <div>
+          <h1 class="font-bold text-3xl md:text-4xl lg:text-5xl tracking-tight mb-4">
+            {libro.titulo}
+          </h1>
+
+          <p class="text-lg text-[--color-text-muted] mb-6">
+            {libro.autor} · {libro.anio} · {libro.editorial}
+          </p>
+
+          <dl class="grid grid-cols-2 gap-x-6 gap-y-3 text-sm mb-8">
+            {libro.edicion && (
+              <>
+                <dt class="text-[--color-text-soft]">Edición</dt>
+                <dd>{libro.edicion}</dd>
+              </>
+            )}
+            {libro.paginas && (
+              <>
+                <dt class="text-[--color-text-soft]">Páginas</dt>
+                <dd>{libro.paginas}</dd>
+              </>
+            )}
+            {libro.tapa && (
+              <>
+                <dt class="text-[--color-text-soft]">Tapa</dt>
+                <dd class="capitalize">{libro.tapa}</dd>
+              </>
+            )}
+            <dt class="text-[--color-text-soft]">Idioma</dt>
+            <dd>{libro.idioma}</dd>
+            {libro.isbn && (
+              <>
+                <dt class="text-[--color-text-soft]">ISBN</dt>
+                <dd>{libro.isbn}</dd>
+              </>
+            )}
+            <dt class="text-[--color-text-soft]">Código</dt>
+            <dd>{libro.id}</dd>
+          </dl>
+
+          <div class="mb-6">
+            <p class="text-3xl font-bold mb-2">{formatPrice(libro.precio)}</p>
+            <p class="text-sm text-[--color-text-muted]">{libro.estado}</p>
+          </div>
+
+          <p class="text-base leading-relaxed mb-4">{libro.descripcion}</p>
+
+          {libro.observaciones && (
+            <p class="text-sm text-[--color-text-soft] mb-8 italic">Nota: {libro.observaciones}</p>
+          )}
+
+          <div class="mb-8">
+            <ContactButtons tituloLibro={libro.titulo} codigoLibro={libro.id} variant="stack" />
+          </div>
+
+          {libro.referencias.length > 0 && (
+            <div>
+              <h2 class="font-semibold text-sm uppercase tracking-wide text-[--color-text-soft] mb-3">
+                Referencias online
+              </h2>
+              <ul class="space-y-2">
+                {libro.referencias.map(ref => (
+                  <li>
+                    <a
+                      href={ref.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-sm text-[--color-accent] hover:underline hover:text-[--color-accent-hover]"
+                    >
+                      {ref.sitio} →
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div class="mt-12 pt-8 border-t border-[--color-border]">
+            <a href="/" class="text-sm text-[--color-text-muted] hover:text-[--color-text] transition-colors">
+              ← Volver al catálogo
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -18,7 +18,10 @@
     "estado": "Usado - Buen estado",
     "descripcion": "Curso clásico de estática para estudiantes de ingeniería civil, basado en el programa de la Universidad Técnica de Aachen.",
     "observaciones": "Tercera Edición. 1.587 páginas. Tapa dura",
-    "cover": null,
+    "cover": {
+      "src": "https://imagessl6.casadellibro.com/a/l/t1/16/9788429120516.jpg",
+      "alt": "Estática en la Construcción - Kurt Hirschfeld"
+    },
     "referencias": [
       {"sitio": "Casa del Libro", "url": "https://www.casadellibro.com/libro-estatica-en-la-construccion/9788429120516/440915"},
       {"sitio": "Amazon España", "url": "https://www.amazon.es/Est%C3%A1tica-en-Construcci%C3%B3n-K-Hirschfeld/dp/8429120513"}
@@ -45,7 +48,10 @@
     "estado": "Usado - Buen estado",
     "descripcion": "Guía práctica para constructores y profesionales de la obra civil, con procedimientos y tablas de cálculo.",
     "observaciones": "Quinta Edición. 406 páginas. Tapa blanda",
-    "cover": null,
+    "cover": {
+      "src": "https://images.isbndb.com/covers/14761523485190.jpg",
+      "alt": "Manual del Constructor - José María Igoa"
+    },
     "referencias": [
       {"sitio": "Casa del Libro", "url": "https://www.casadellibro.com/ficha/9788432921165/manual-del-constructor/"}
     ],
@@ -119,7 +125,10 @@
     "estado": "Usado - Buen estado",
     "descripcion": "Introducción a las matemáticas finitas aplicadas a negocios, economía y ciencias sociales.",
     "observaciones": "Tercera Edición. 948 páginas. Tapa blanda",
-    "cover": null,
+    "cover": {
+      "src": "https://images.isbndb.com/covers/1342633485642.jpg",
+      "alt": "Matemáticas Aplicadas - Frank S. Budnick"
+    },
     "referencias": [
       {"sitio": "Amazon México", "url": "https://www.amazon.com.mx/Matematicas-Aplicadas-Administracion-Economia-Ciencias/dp/9701056981"}
     ],
@@ -145,7 +154,10 @@
     "estado": "Usado - Excelente estado",
     "descripcion": "Manual sobre gestión de operaciones y cadena de suministro, adaptado de la versión MBA estadounidense.",
     "observaciones": "Primera Edición en Castellano. 110 páginas",
-    "cover": null,
+    "cover": {
+      "src": "https://images.isbndb.com/covers/9561183485213.jpg",
+      "alt": "Gestión de Operaciones - Steven Nahmias"
+    },
     "referencias": [
       {"sitio": "Google Books", "url": "https://books.google.com/books?id=BxK1AAAAMAAJ"}
     ],

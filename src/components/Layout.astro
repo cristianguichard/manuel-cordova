@@ -48,26 +48,35 @@ const { owner } = site;
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-black text-white px-4 py-2 rounded z-50">
       Saltar al contenido
     </a>
-    <header class="sticky top-0 z-40 bg-white border-b border-[--color-border]">
+    <header class="sticky top-0 z-40 bg-[--color-bg] border-b border-[--color-border]">
       <div class="max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
-        <nav class="flex items-center justify-between h-16">
-          <a href="/" class="block leading-tight">
-  <span class="block font-bold text-lg uppercase tracking-tight">CONSTRULIBROS</span>
-  <span class="block text-sm text-[--color-text-muted]">Manuel Córdova</span>
-</a>
+        <nav class="flex items-center justify-between h-20">
+          <a href="/" class="group block leading-tight">
+            <span class="block text-[10px] uppercase tracking-[0.3em] text-[--color-text-soft] mb-0.5 transition-colors group-hover:text-[--color-gold]">Catálogo</span>
+            <span class="block font-bold text-2xl tracking-tight text-[--color-text]">CONSTRULIBROS</span>
+          </a>
+          <div class="flex items-center gap-6">
+            <span class="hidden md:block w-px h-8 bg-[--color-border]"></span>
+            <span class="hidden md:block text-sm text-[--color-text-muted]">{owner.nombre}</span>
+          </div>
         </nav>
       </div>
+      <div class="h-px bg-gradient-to-r from-transparent via-[--color-gold] to-transparent"></div>
     </header>
     <main id="main" class="flex-1">
       <slot />
     </main>
-    <footer class="border-t border-[--color-border] py-12 mt-16">
+    <footer class="border-t border-[--color-border] py-16 mt-16">
       <div class="max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div class="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+          <div class="text-center md:text-left">
+            <p class="font-bold text-lg tracking-tight mb-1">CONSTRULIBROS</p>
+            <p class="text-sm text-[--color-text-soft]">{owner.nombre} · Chile</p>
+          </div>
+          <div class="flex flex-col md:flex-row items-center gap-6">
             <a
               href={`mailto:${owner.email}`}
-              class="inline-flex items-center gap-2 text-sm text-[--color-text-muted] hover:text-[--color-text] transition-colors"
+              class="inline-flex items-center gap-2 text-sm text-[--color-text-muted] hover:text-[--color-accent] transition-colors"
             >
               <Icon name="mail" size={16} />
               {owner.email}
@@ -76,17 +85,18 @@ const { owner } = site;
               href={`https://wa.me/${owner.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 text-sm text-[--color-text-muted] hover:text-[--color-text] transition-colors"
+              class="inline-flex items-center gap-2 text-sm text-[--color-text-muted] hover:text-[--color-whatsapp] transition-colors"
             >
               <Icon name="whatsapp" size={16} />
               WhatsApp
             </a>
           </div>
-          <p class="text-sm text-[--color-text-soft]">Sitio creado en Astro + Tailwind</p>
         </div>
-        <p class="text-center text-sm text-[--color-text-muted] mt-4">
-          © {new Date().getFullYear()} CONSTRULIBROS
-        </p>
+        <div class="mt-12 pt-8 border-t border-[--color-border] text-center">
+          <p class="text-xs text-[--color-text-soft] tracking-wide">
+            © {new Date().getFullYear()} CONSTRULIBROS · Todos los derechos reservados
+          </p>
+        </div>
       </div>
     </footer>
   </body>

@@ -2,7 +2,6 @@
 import type { Libro } from '../types';
 import BookCardPlaceholder from './BookCardPlaceholder.astro';
 import Icon from './Icon.astro';
-import { Image } from 'astro:assets';
 
 const fotoRealModules = import.meta.glob('../assets/libros/*.{jpg,jpeg,png,webp}', { eager: true });
 
@@ -29,50 +28,61 @@ const formatPrice = (precio: number) => {
 ---
 
 <article
-  class="border border-[--color-border] rounded-lg overflow-hidden hover:border-black transition-colors duration-200"
+  class="group relative bg-white border border-[--color-border] rounded-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-[--color-text]/5 hover:-translate-y-1"
   data-titulo={libro.titulo.toLowerCase()}
   data-autor={libro.autor.toLowerCase()}
   data-anio={libro.anio}
   data-precio={libro.precio}
   data-tema={libro.tema}
 >
+  <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[--color-gold] via-[--color-gold-light] to-[--color-gold] opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+  
   <a href={`/libros/${libro.slug}`} class="block relative">
-    <div class="aspect-[3/4] bg-neutral-100 overflow-hidden">
+    <div class="aspect-[3/4] bg-[--color-bg-subtle] overflow-hidden">
       {fotoRealSrc ? (
         <img
           src={fotoRealSrc}
           alt={`Tapa de ${libro.titulo}`}
           loading="lazy"
-          class="w-full h-full object-cover"
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       ) : libro.cover ? (
         <img
           src={libro.cover.src}
           alt={libro.cover.alt}
           loading="lazy"
-          class="w-full h-full object-contain"
+          class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
         />
       ) : (
         <BookCardPlaceholder titulo={libro.titulo} autor={libro.autor} anio={libro.anio} />
       )}
     </div>
     {!libro.disponible && (
-      <div class="absolute top-2 right-2 bg-red-500 text-white text-xs font-medium px-2 py-1 rounded">
+      <div class="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-semibold uppercase tracking-wider px-2 py-1">
         Vendido
       </div>
     )}
   </a>
-  <div class="p-4">
-    <h3 class="font-semibold text-base leading-snug line-clamp-2 mb-1">{libro.titulo}</h3>
-    <p class="text-sm text-[--color-text-muted] mb-2">{libro.autor} · {libro.anio}</p>
+  
+  <div class="p-5">
+    <div class="mb-3">
+      <span class="inline-block text-[10px] uppercase tracking-widest text-[--color-text-soft] mb-2">{libro.tema}</span>
+      <h3 class="font-semibold text-base leading-snug line-clamp-2 text-[--color-text] group-hover:text-[--color-accent] transition-colors">{libro.titulo}</h3>
+    </div>
+    
+    <p class="text-sm text-[--color-text-muted] mb-3">{libro.autor} · {libro.anio}</p>
+    
     {libro.resumen && (
-      <p class="text-xs text-[--color-text-soft] line-clamp-2 mb-2">
+      <p class="text-xs text-[--color-text-soft] line-clamp-2 mb-4 leading-relaxed">
         {libro.resumen}
       </p>
     )}
-    <div class="flex items-center justify-between">
-      <span class="font-medium">{formatPrice(libro.precio)}</span>
-      <Icon name="arrow-right" size={16} class="text-[--color-text-muted]" />
+    
+    <div class="flex items-center justify-between pt-3 border-t border-[--color-border]">
+      <span class="font-semibold text-base text-[--color-text]">{formatPrice(libro.precio)}</span>
+      <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[--color-bg-subtle] text-[--color-text-muted] group-hover:bg-[--color-accent] group-hover:text-white transition-all duration-300">
+        <Icon name="arrow-right" size={14} />
+      </span>
     </div>
   </div>
 </article>

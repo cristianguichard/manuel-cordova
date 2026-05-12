@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import site from '../data/site.json';
+import Icon from './Icon.astro';
 
 interface Props {
   title: string;
@@ -11,6 +13,7 @@ interface Props {
 const { title, description, ogImage = '/og-image.png', canonical } = Astro.props;
 const siteUrl = 'https://manuel-cordova.pages.dev';
 const canonicalUrl = canonical ? `${siteUrl}${canonical}` : siteUrl;
+const { owner } = site;
 ---
 
 <!doctype html>
@@ -21,6 +24,16 @@ const canonicalUrl = canonical ? `${siteUrl}${canonical}` : siteUrl;
     <meta name="description" content={description} />
     <meta name="author" content="Manuel Córdova" />
     <link rel="canonical" href={canonicalUrl} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/inter-variable.woff2"
+      crossorigin
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={`${siteUrl}${ogImage}`} />
@@ -30,7 +43,6 @@ const canonicalUrl = canonical ? `${siteUrl}${canonical}` : siteUrl;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
     <title>{title}</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body class="min-h-screen flex flex-col">
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-black text-white px-4 py-2 rounded z-50">
@@ -49,9 +61,29 @@ const canonicalUrl = canonical ? `${siteUrl}${canonical}` : siteUrl;
     <footer class="border-t border-[--color-border] py-12 mt-16">
       <div class="max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
         <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-          <p class="text-sm text-[--color-text-muted]">© {new Date().getFullYear()} Biblioteca Manuel Córdova</p>
+          <div class="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+            <a
+              href={`mailto:${owner.email}`}
+              class="inline-flex items-center gap-2 text-sm text-[--color-text-muted] hover:text-[--color-text] transition-colors"
+            >
+              <Icon name="mail" size={16} />
+              {owner.email}
+            </a>
+            <a
+              href={`https://wa.me/${owner.whatsapp}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 text-sm text-[--color-text-muted] hover:text-[--color-text] transition-colors"
+            >
+              <Icon name="whatsapp" size={16} />
+              WhatsApp
+            </a>
+          </div>
           <p class="text-sm text-[--color-text-soft]">Sitio creado en Astro + Tailwind</p>
         </div>
+        <p class="text-center text-sm text-[--color-text-muted] mt-4">
+          © {new Date().getFullYear()} Biblioteca Manuel Córdova
+        </p>
       </div>
     </footer>
   </body>

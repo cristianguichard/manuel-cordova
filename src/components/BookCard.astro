@@ -2,12 +2,22 @@
 import type { Libro } from '../types';
 import BookCardPlaceholder from './BookCardPlaceholder.astro';
 import Icon from './Icon.astro';
+import { Image } from 'astro:assets';
+
+const fotoRealModules = import.meta.glob('../assets/libros/*.{jpg,jpeg,png,webp}', { eager: true });
 
 interface Props {
   libro: Libro;
 }
 
 const { libro } = Astro.props;
+
+const getFotoRealSrc = (fotoReal: string) => {
+  const key = Object.keys(fotoRealModules).find(k => k.endsWith(fotoReal));
+  return key ? (fotoRealModules[key] as { default: { src: string } }).default.src : null;
+};
+
+const fotoRealSrc = libro.fotoReal ? getFotoRealSrc(libro.fotoReal) : null;
 
 const formatPrice = (precio: number) => {
   return new Intl.NumberFormat('es-CL', {
@@ -28,13 +38,18 @@ const formatPrice = (precio: number) => {
 >
   <a href={`/libros/${libro.slug}`} class="block relative">
     <div class="aspect-[3/4] bg-neutral-100 overflow-hidden">
-      {libro.cover ? (
+      {fotoRealSrc ? (
+        <img
+          src={fotoRealSrc}
+          alt={`Tapa de ${libro.titulo}`}
+          loading="lazy"
+          class="w-full h-full object-cover"
+        />
+      ) : libro.cover ? (
         <img
           src={libro.cover.src}
           alt={libro.cover.alt}
           loading="lazy"
-          width="300"
-          height="400"
           class="w-full h-full object-contain"
         />
       ) : (
@@ -50,6 +65,11 @@ const formatPrice = (precio: number) => {
   <div class="p-4">
     <h3 class="font-semibold text-base leading-snug line-clamp-2 mb-1">{libro.titulo}</h3>
     <p class="text-sm text-[--color-text-muted] mb-2">{libro.autor} · {libro.anio}</p>
+    {libro.resumen && (
+      <p class="text-xs text-[--color-text-soft] line-clamp-2 mb-2">
+        {libro.resumen}
+      </p>
+    )}
     <div class="flex items-center justify-between">
       <span class="font-medium">{formatPrice(libro.precio)}</span>
       <Icon name="arrow-right" size={16} class="text-[--color-text-muted]" />

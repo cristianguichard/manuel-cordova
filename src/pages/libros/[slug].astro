@@ -6,6 +6,8 @@ import librosData from '../../data/libros.json';
 import site from '../../data/site.json';
 import type { Libro } from '../../types';
 
+const fotoRealModules = import.meta.glob('../../assets/libros/*.{jpg,jpeg,png,webp}', { eager: true });
+
 export function getStaticPaths() {
   return librosData.map(libro => ({
     params: { slug: libro.slug },
@@ -14,6 +16,13 @@ export function getStaticPaths() {
 }
 
 const { libro } = Astro.props as { libro: Libro };
+
+const getFotoRealSrc = (fotoReal: string) => {
+  const key = Object.keys(fotoRealModules).find(k => k.endsWith(fotoReal));
+  return key ? (fotoRealModules[key] as { default: { src: string } }).default.src : null;
+};
+
+const fotoRealSrc = libro.fotoReal ? getFotoRealSrc(libro.fotoReal) : null;
 
 const formatPrice = (precio: number) => {
   return new Intl.NumberFormat('es-CL', {
@@ -46,7 +55,7 @@ const jsonLd = {
 ---
 
 <Layout
-  title={`${libro.titulo} — Biblioteca Manuel Córdova`}
+  title={`${libro.titulo} — CONSTRULIBROS`}
   description={libro.descripcion}
 >
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
@@ -60,7 +69,13 @@ const jsonLd = {
       <div class="grid lg:grid-cols-2 gap-12 lg:gap-16">
         <div class="lg:sticky lg:top-24 lg:self-start">
           <div class="aspect-[3/4] max-w-md mx-auto">
-            {libro.cover ? (
+            {fotoRealSrc ? (
+              <img
+                src={fotoRealSrc}
+                alt={`Tapa de ${libro.titulo}`}
+                class="w-full h-full object-cover rounded-lg"
+              />
+            ) : libro.cover ? (
               <img
                 src={libro.cover.src}
                 alt={libro.cover.alt}
@@ -120,6 +135,19 @@ const jsonLd = {
           </div>
 
           <p class="text-base leading-relaxed mb-4">{libro.descripcion}</p>
+
+          {libro.resumen && (
+            <section class="mb-8">
+              <h2 class="font-semibold text-sm uppercase tracking-wide text-[--color-text-soft] mb-3">
+                Contenido
+              </h2>
+              <ul class="space-y-1 list-disc list-inside">
+                {libro.resumen.split(/,\s*/).map(item => (
+                  <li class="text-base">{item}</li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           {libro.observaciones && (
             <p class="text-sm text-[--color-text-soft] mb-8 italic">Nota: {libro.observaciones}</p>

@@ -30,6 +30,8 @@ export interface Libro {
   descripcion: string;
   observaciones: string | null;
   cover: Cover | null;
+  fotoReal: string | null;
+  resumen: string | null;
   referencias: Referencia[];
   destacado: boolean;
   disponible: boolean;

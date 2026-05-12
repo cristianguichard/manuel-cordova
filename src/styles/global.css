@@ -2,17 +2,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #fafaf8;
-  --color-bg-subtle: #f5f4f0;
-  --color-border: #e5e3dc;
+  --color-bg: #fefae0;
+  --color-bg-subtle: #faedcd;
+  --color-border: #ccd5ae;
   --color-text: #1a1a18;
   --color-text-muted: #6b6960;
   --color-text-soft: #9c9a93;
-  --color-accent: #b8860b;
+  --color-accent: #d4a373;
   --color-accent-hover: #9a7209;
   --color-whatsapp: #25d366;
-  --color-gold: #c9a227;
-  --color-gold-light: #e8d48b;
+  --color-gold: #d4a373;
+  --color-gold-light: #e9edc9;
 }
 
 @layer base {

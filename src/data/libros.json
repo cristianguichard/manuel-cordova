@@ -13,7 +13,7 @@
     "codigoTema": "TE",
     "isbn": "978-84-291-2051-6",
     "idioma": "Español",
-    "precio": 45000,
+    "precio": 65000,
     "moneda": "CLP",
     "estado": "Usado - Buen estado",
     "descripcion": "Curso clásico de estática para estudiantes de ingeniería civil, basado en el programa de la Universidad Técnica de Aachen.",
@@ -25,8 +25,14 @@
     "fotoReal": null,
     "resumen": null,
     "referencias": [
-      {"sitio": "Casa del Libro", "url": "https://www.casadellibro.com/libro-estatica-en-la-construccion/9788429120516/440915"},
-      {"sitio": "Amazon España", "url": "https://www.amazon.es/Est%C3%A1tica-en-Construcci%C3%B3n-K-Hirschfeld/dp/8429120513"}
+      {
+        "sitio": "Casa del Libro",
+        "url": "https://www.casadellibro.com/libro-estatica-en-la-construccion/9788429120516/440915"
+      },
+      {
+        "sitio": "Amazon España",
+        "url": "https://www.amazon.es/Est%C3%A1tica-en-Construcci%C3%B3n-K-Hirschfeld/dp/8429120513"
+      }
     ],
     "destacado": false,
     "disponible": true
@@ -45,7 +51,7 @@
     "codigoTema": "TE",
     "isbn": "84-329-2116-5",
     "idioma": "Español",
-    "precio": 40000,
+    "precio": 25000,
     "moneda": "CLP",
     "estado": "Usado - Buen estado",
     "descripcion": "Guía práctica para constructores y profesionales de la obra civil, con procedimientos y tablas de cálculo.",
@@ -57,7 +63,10 @@
     "fotoReal": null,
     "resumen": null,
     "referencias": [
-      {"sitio": "Casa del Libro", "url": "https://www.casadellibro.com/ficha/9788432921165/manual-del-constructor/"}
+      {
+        "sitio": "Casa del Libro",
+        "url": "https://www.casadellibro.com/ficha/9788432921165/manual-del-constructor/"
+      }
     ],
     "destacado": false,
     "disponible": true
@@ -81,7 +90,10 @@
     "estado": "Usado - Buen estado",
     "descripcion": "Manual sobre diseño, construcción y mantenimiento de chimeneas.",
     "observaciones": "Segunda Edición. 220 páginas. Tapa dura. Libro previo a ISBN moderno.",
-    "cover": null,
+    "cover": {
+      "src": "/covers/tev0003.webp",
+      "alt": "Portada del libro La Chimenea en el Hogar"
+    },
     "fotoReal": null,
     "resumen": null,
     "referencias": [],
@@ -102,12 +114,15 @@
     "codigoTema": "TE",
     "isbn": null,
     "idioma": "Español",
-    "precio": 40000,
+    "precio": 45000,
     "moneda": "CLP",
     "estado": "Usado - Buen estado",
     "descripcion": "Texto fundamental sobre análisis estructural mediante el método de distribución de momentos.",
     "observaciones": "Primera Edición. 412 páginas",
-    "cover": null,
+    "cover": {
+      "src": "/covers/tev0004.webp",
+      "alt": "Portada del libro Distribución de Momentos"
+    },
     "fotoReal": null,
     "resumen": null,
     "referencias": [],
@@ -140,7 +155,10 @@
     "fotoReal": null,
     "resumen": null,
     "referencias": [
-      {"sitio": "Amazon México", "url": "https://www.amazon.com.mx/Matematicas-Aplicadas-Administracion-Economia-Ciencias/dp/9701056981"}
+      {
+        "sitio": "Amazon México",
+        "url": "https://www.amazon.com.mx/Matematicas-Aplicadas-Administracion-Economia-Ciencias/dp/9701056981"
+      }
     ],
     "destacado": false,
     "disponible": true
@@ -171,7 +189,10 @@
     "fotoReal": null,
     "resumen": null,
     "referencias": [
-      {"sitio": "Google Books", "url": "https://books.google.com/books?id=BxK1AAAAMAAJ"}
+      {
+        "sitio": "Google Books",
+        "url": "https://books.google.com/books?id=BxK1AAAAMAAJ"
+      }
     ],
     "destacado": false,
     "disponible": true
@@ -190,7 +211,7 @@
     "codigoTema": "TE",
     "isbn": "978-968-880-530-5",
     "idioma": "Español",
-    "precio": 45000,
+    "precio": 20000,
     "moneda": "CLP",
     "estado": "Usado - Buen estado",
     "descripcion": "Texto clásico sobre control de calidad y gestión de la producción.",
@@ -202,7 +223,10 @@
     "fotoReal": null,
     "resumen": null,
     "referencias": [
-      {"sitio": "Casa del Libro", "url": "https://latam.casadellibro.com/libro-control-de-calidad-4-ed/9789688805305/492037"}
+      {
+        "sitio": "Casa del Libro",
+        "url": "https://latam.casadellibro.com/libro-control-de-calidad-4-ed/9789688805305/492037"
+      }
     ],
     "destacado": false,
     "disponible": true
@@ -226,7 +250,10 @@
     "estado": "Usado - Buen estado",
     "descripcion": "Manual sobre análisis y diseño de sistemas de información.",
     "observaciones": "Primera Edición. 415 páginas. Tapa blanda",
-    "cover": null,
+    "cover": {
+      "src": "/covers/tev0008.webp",
+      "alt": "Portada del libro Análisis de Sistemas"
+    },
     "fotoReal": null,
     "resumen": null,
     "referencias": [],
@@ -247,16 +274,22 @@
     "codigoTema": "TE",
     "isbn": null,
     "idioma": "Español",
-    "precio": 25000,
+    "precio": 20000,
     "moneda": "CLP",
     "estado": "Usado - Buen estado",
     "descripcion": "Reglamento de seguridad de las instalaciones de consumo de energía eléctrica, Decreto 8 de 2020.",
     "observaciones": "Edición Actualizada 2025. 497 páginas. Tapa blanda",
-    "cover": null,
+    "cover": {
+      "src": "/covers/tev0009.webp",
+      "alt": "Portada del libro Reglamento Seguridad Instalaciones Eléctricas Decreto 8"
+    },
     "fotoReal": null,
     "resumen": null,
     "referencias": [
-      {"sitio": "SEC", "url": "https://www.sec.cl/reglamento-de-seguridad-de-las-instalaciones-de-consumo-de-energia-electrica-decreto-08/"}
+      {
+        "sitio": "SEC",
+        "url": "https://www.sec.cl/reglamento-de-seguridad-de-las-instalaciones-de-consumo-de-energia-electrica-decreto-08/"
+      }
     ],
     "destacado": false,
     "disponible": true
@@ -275,12 +308,15 @@
     "codigoTema": "TE",
     "isbn": null,
     "idioma": "Español",
-    "precio": 50000,
+    "precio": 35000,
     "moneda": "CLP",
     "estado": "Usado - Buen estado",
     "descripcion": "Texto fundamental sobre el diseño y construcción de estructuras de hormigón pretensado.",
     "observaciones": "Primera Edición en Castellano. 279 páginas. Tapa dura",
-    "cover": null,
+    "cover": {
+      "src": "/covers/tev0010.webp",
+      "alt": "Portada del libro Hormigón Pretensado"
+    },
     "fotoReal": null,
     "resumen": null,
     "referencias": [],
@@ -301,7 +337,7 @@
     "codigoTema": "TE",
     "isbn": null,
     "idioma": "Español",
-    "precio": 75000,
+    "precio": 65000,
     "moneda": "CLP",
     "estado": "Usado - Excelente estado",
     "descripcion": "Manual avanzado sobre sistemas de planificación y control de la fabricación, incluyendo MRP, JIT y teoría de restricciones.",
@@ -327,7 +363,7 @@
     "codigoTema": "TE",
     "isbn": null,
     "idioma": "Español",
-    "precio": 90000,
+    "precio": 40000,
     "moneda": "CLP",
     "estado": "Usado - Excelente estado",
     "descripcion": "Obra de referencia sobre diseño y construcción bioclimática y arquitectura sostenible.",
@@ -353,12 +389,15 @@
     "codigoTema": "TE",
     "isbn": null,
     "idioma": "Español",
-    "precio": 15000,
+    "precio": 25000,
     "moneda": "CLP",
     "estado": "Usado - Buen estado",
     "descripcion": "Manual técnico con recomendaciones para la fabricación e instalación de armaduras en obras de construcción.",
     "observaciones": "Primera Edición. 350 páginas. Tapa blanda",
-    "cover": null,
+    "cover": {
+      "src": "/covers/tev0013.webp",
+      "alt": "Portada del libro Manual de Recomendaciones Técnicas para la Fabricación e Instalación de Armaduras"
+    },
     "fotoReal": null,
     "resumen": null,
     "referencias": [],
@@ -384,7 +423,10 @@
     "estado": "Usado - Buen estado",
     "descripcion": "Obra sobre dirección de proyectos con un enfoque innovador y nuevas perspectivas para la gestión empresarial.",
     "observaciones": "Primera Edición. 280 páginas. Tapa blanda",
-    "cover": null,
+    "cover": {
+      "src": "/covers/tev0014.webp",
+      "alt": "Portada del libro La Dirección de Proyectos (Una Nueva Visión)"
+    },
     "fotoReal": null,
     "resumen": null,
     "referencias": [],
@@ -410,9 +452,157 @@
     "estado": "Usado - Buen estado",
     "descripcion": "Análisis de las nuevas tendencias y estrategias en administración, explorando los nuevos paradigmas organizacionales.",
     "observaciones": "Primera Edición. 450 páginas. Tapa blanda",
-    "cover": null,
+    "cover": {
+      "src": "/covers/tev0015.webp",
+      "alt": "Portada del libro Innovaciones de la Administración. Tendencias y Estrategias. Los Nuevos Paradigmas"
+    },
     "fotoReal": null,
     "resumen": null,
+    "referencias": [],
+    "destacado": false,
+    "disponible": true
+  },
+  {
+    "id": "TEV0016",
+    "slug": "acero-laminado-prontuario-construcciones-metalicas",
+    "titulo": "Acero Laminado. Prontuario. Construcciones Metálicas",
+    "autor": "Nicolás Larburu Arrizabalaga",
+    "editorial": "Thomson-Paraninfo",
+    "anio": 2005,
+    "edicion": "Primera Edición",
+    "paginas": 362,
+    "tapa": "blanda",
+    "tema": "Ingeniería Estructural",
+    "codigoTema": "TE",
+    "isbn": null,
+    "idioma": "Español",
+    "precio": 40000,
+    "moneda": "CLP",
+    "estado": "Usado - Buen estado",
+    "descripcion": "Acero laminado para estructuras de edificación. Características y Productos laminados",
+    "observaciones": "Primera Edición. 362 páginas. Tapa blanda.",
+    "cover": {
+      "src": "/covers/tev0016.webp",
+      "alt": "Portada del libro Acero Laminado. Prontuario. Construcciones Metálicas"
+    },
+    "fotoReal": null,
+    "resumen": "Acero laminado para estructuras de edificación. Características y Productos laminados",
+    "referencias": [],
+    "destacado": false,
+    "disponible": true
+  },
+  {
+    "id": "TEV0017",
+    "slug": "gestion-de-procesos-en-rol-facilitador",
+    "titulo": "Gestión de Procesos (en Rol Facilitador)",
+    "autor": "Juan Bravo Carrasco",
+    "editorial": "Editorial Evolución S.A.",
+    "anio": 2015,
+    "edicion": "Sexta Edición",
+    "paginas": 317,
+    "tapa": "blanda",
+    "tema": "Gestión de Operaciones",
+    "codigoTema": "TE",
+    "isbn": null,
+    "idioma": "Español",
+    "precio": 25000,
+    "moneda": "CLP",
+    "estado": "Usado - Buen estado",
+    "descripcion": "Cambio del rol de los ingenieros de proceso, desde expertos a facilitadores. Ahora deben enseñar, coordinar, motivar, liderar y aportar método, pero no hacer el trabajo.",
+    "observaciones": "Sexta Edición. 317 páginas. Tapa blanda.",
+    "cover": {
+      "src": "/covers/tev0017.webp",
+      "alt": "Portada del libro Gestión de Procesos (en Rol Facilitador)"
+    },
+    "fotoReal": null,
+    "resumen": "Cambio del rol de los ingenieros de proceso, desde expertos a facilitadores. Ahora deben enseñar, coordinar, motivar, liderar y aportar método, pero no hacer el trabajo.",
+    "referencias": [],
+    "destacado": false,
+    "disponible": true
+  },
+  {
+    "id": "TEV0018",
+    "slug": "manual-de-practicas-de-soldadura-con-electrodo-revestido",
+    "titulo": "Manual de prácticas de soldadura con electrodo revestido",
+    "autor": "Manuel Mancheño-Cristina Fernández",
+    "editorial": "Ediciones Paraninfo S.A.",
+    "anio": 2012,
+    "edicion": "Primera Edición",
+    "paginas": 222,
+    "tapa": "blanda",
+    "tema": "Construcción",
+    "codigoTema": "TE",
+    "isbn": null,
+    "idioma": "Español",
+    "precio": 35000,
+    "moneda": "CLP",
+    "estado": "Usado - Como nuevo",
+    "descripcion": "Aprendizaje, consulta y actualización de forma de enseñar y aprender  a soldar con electrodo revestido",
+    "observaciones": "Primera Edición. 222 páginas. Tapa blanda. Como nuevo.",
+    "cover": {
+      "src": "/covers/tev0018.webp",
+      "alt": "Portada del libro Manual de prácticas de soldadura con electrodo revestido"
+    },
+    "fotoReal": null,
+    "resumen": "Aprendizaje, consulta y actualización de forma de enseñar y aprender  a soldar con electrodo revestido",
+    "referencias": [],
+    "destacado": false,
+    "disponible": true
+  },
+  {
+    "id": "TEV0019",
+    "slug": "la-empresa-flexible",
+    "titulo": "La Empresa Flexible",
+    "autor": "Alvin Toffler",
+    "editorial": "Plaza & Janes Editores S.A.",
+    "anio": 1985,
+    "edicion": "Primera Edición",
+    "paginas": 254,
+    "tapa": "blanda",
+    "tema": "Administración",
+    "codigoTema": "TE",
+    "isbn": null,
+    "idioma": "Español",
+    "precio": 6000,
+    "moneda": "CLP",
+    "estado": "Usado - Buen estado",
+    "descripcion": "Explica cómo las grandes corporaciones deben reinventarse para sobrevivir a los rápidos cambios tecnológicos y económicos. Propone abandonar las estructuras rígidas y jerárquicas del pasado para adoptar un modelo descentralizado, adaptable y enfocado en la constante innovación.",
+    "observaciones": "Primera Edición. 254 páginas. Tapa blanda.",
+    "cover": {
+      "src": "/covers/tev0019.webp",
+      "alt": "Portada del libro La Empresa Flexible"
+    },
+    "fotoReal": null,
+    "resumen": "Explica cómo las grandes corporaciones deben reinventarse para sobrevivir a los rápidos cambios tecnológicos y económicos. Propone abandonar las estructuras rígidas y jerárquicas del pasado para adoptar un modelo descentralizado, adaptable y enfocado en la constante innovación.",
+    "referencias": [],
+    "destacado": false,
+    "disponible": true
+  },
+  {
+    "id": "TEV0020",
+    "slug": "el-marketing-desde-la-cumbre",
+    "titulo": "El Marketing desde la Cumbre",
+    "autor": "Helmut Maucher",
+    "editorial": "Nacional Financiera Fondo de Cultura Económica México",
+    "anio": 1995,
+    "edicion": "Primera Edición",
+    "paginas": 165,
+    "tapa": "blanda",
+    "tema": "Administración",
+    "codigoTema": "TE",
+    "isbn": null,
+    "idioma": "Español",
+    "precio": 15000,
+    "moneda": "CLP",
+    "estado": "Usado - Buen estado",
+    "descripcion": "Detalla cómo dirigir corporaciones globales, integrando las estrategias de mercado con la ética corporativa, la gestión de recursos humanos y el liderazgo orientado a las personas.",
+    "observaciones": "Primera Edición. 165 páginas. Tapa blanda.",
+    "cover": {
+      "src": "/covers/tev0020.webp",
+      "alt": "Portada del libro El Marketing desde la Cumbre"
+    },
+    "fotoReal": null,
+    "resumen": "Detalla cómo dirigir corporaciones globales, integrando las estrategias de mercado con la ética corporativa, la gestión de recursos humanos y el liderazgo orientado a las personas.",
     "referencias": [],
     "destacado": false,
     "disponible": true

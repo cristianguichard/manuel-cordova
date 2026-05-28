@@ -129,10 +129,14 @@ const jsonLd = {
             <dd>{libro.id}</dd>
           </dl>
 
-          <div class="mb-6">
+          <div class="mb-4">
             <p class="text-3xl font-bold mb-2">{formatPrice(libro.precio)}</p>
             <p class="text-sm text-[--color-text-muted]">{libro.estado}</p>
           </div>
+
+          <p class="text-sm text-[--color-text-soft] mb-8">
+            Envío a consultar · Entrega disponible sin costo en <strong>Pichilemu</strong> o <strong>Ñuñoa</strong>
+          </p>
 
           <p class="text-base leading-relaxed mb-4">{libro.descripcion}</p>
 

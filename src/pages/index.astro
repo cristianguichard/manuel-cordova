@@ -70,7 +70,7 @@ const formatPrice = (precio: number) => {
 
       <section id="libros-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {libros.map((libro, index) => (
-          <div class="animate-fade-in-up" style={`animation-delay: ${index * 50}ms`}>
+          <div class="animate-fade-in-up h-full" style={`animation-delay: ${index * 50}ms`}>
             <BookCard libro={libro} />
           </div>
         ))}

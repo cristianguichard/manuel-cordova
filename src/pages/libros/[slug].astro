@@ -5,8 +5,15 @@ import ContactButtons from '../../components/ContactButtons.astro';
 import librosData from '../../data/libros.json';
 import site from '../../data/site.json';
 import type { Libro } from '../../types';
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
 
 const fotoRealModules = import.meta.glob('../../assets/libros/*.{jpg,jpeg,png,webp}', { eager: true });
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const projectRoot = resolve(__dirname, '../../..');
 
 export function getStaticPaths() {
   return librosData.map(libro => ({
@@ -23,6 +30,10 @@ const getFotoRealSrc = (fotoReal: string) => {
 };
 
 const fotoRealSrc = libro.fotoReal ? getFotoRealSrc(libro.fotoReal) : null;
+
+const coverExists = libro.cover
+  ? existsSync(resolve(projectRoot, 'public', libro.cover.src.replace(/^\//, '')))
+  : false;
 
 const formatPrice = (precio: number) => {
   return new Intl.NumberFormat('es-CL', {
@@ -75,7 +86,7 @@ const jsonLd = {
                 alt={`Tapa de ${libro.titulo}`}
                 class="w-full h-full object-cover rounded-lg"
               />
-            ) : libro.cover ? (
+            ) : libro.cover && coverExists ? (
               <img
                 src={libro.cover.src}
                 alt={libro.cover.alt}

@@ -2,6 +2,9 @@
 import type { Libro } from '../types';
 import BookCardPlaceholder from './BookCardPlaceholder.astro';
 import Icon from './Icon.astro';
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
 
 const fotoRealModules = import.meta.glob('../assets/libros/*.{jpg,jpeg,png,webp}', { eager: true });
 
@@ -18,6 +21,14 @@ const getFotoRealSrc = (fotoReal: string) => {
 
 const fotoRealSrc = libro.fotoReal ? getFotoRealSrc(libro.fotoReal) : null;
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const projectRoot = resolve(__dirname, '../..');
+
+const coverExists = libro.cover
+  ? existsSync(resolve(projectRoot, 'public', libro.cover.src.replace(/^\//, '')))
+  : false;
+
 const formatPrice = (precio: number) => {
   return new Intl.NumberFormat('es-CL', {
     style: 'currency',
@@ -28,7 +39,7 @@ const formatPrice = (precio: number) => {
 ---
 
 <article
-  class="group relative bg-white border border-[--color-border] rounded-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-[--color-text]/5 hover:-translate-y-1"
+  class="group relative h-full flex flex-col bg-white border border-[--color-border] rounded-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-[--color-text]/5 hover:-translate-y-1"
   data-titulo={libro.titulo.toLowerCase()}
   data-autor={libro.autor.toLowerCase()}
   data-anio={libro.anio}
@@ -36,7 +47,7 @@ const formatPrice = (precio: number) => {
   data-tema={libro.tema}
 >
   <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[--color-gold] via-[--color-gold-light] to-[--color-gold] opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
-  
+
   <a href={`/libros/${libro.slug}`} class="block relative">
     <div class="aspect-[3/4] bg-[--color-bg-subtle] overflow-hidden">
       {fotoRealSrc ? (
@@ -46,7 +57,7 @@ const formatPrice = (precio: number) => {
           loading="lazy"
           class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-      ) : libro.cover ? (
+      ) : libro.cover && coverExists ? (
         <img
           src={libro.cover.src}
           alt={libro.cover.alt}
@@ -63,22 +74,22 @@ const formatPrice = (precio: number) => {
       </div>
     )}
   </a>
-  
-  <div class="p-5">
+
+  <div class="p-5 flex flex-col flex-1">
     <div class="mb-3">
       <span class="inline-block text-[10px] uppercase tracking-widest text-[--color-text-soft] mb-2">{libro.tema}</span>
       <h3 class="font-semibold text-base leading-snug line-clamp-2 text-[--color-text] group-hover:text-[--color-accent] transition-colors">{libro.titulo}</h3>
     </div>
-    
+
     <p class="text-sm text-[--color-text-muted] mb-3">{libro.autor} · {libro.anio}</p>
-    
+
     {libro.resumen && (
       <p class="text-xs text-[--color-text-soft] line-clamp-2 mb-4 leading-relaxed">
         {libro.resumen}
       </p>
     )}
-    
-    <div class="flex items-center justify-between pt-3 border-t border-[--color-border]">
+
+    <div class="mt-auto flex items-center justify-between pt-3 border-t border-[--color-border]">
       <span class="font-semibold text-base text-[--color-text]">{formatPrice(libro.precio)}</span>
       <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[--color-bg-subtle] text-[--color-text-muted] group-hover:bg-[--color-accent] group-hover:text-white transition-all duration-300">
         <Icon name="arrow-right" size={14} />

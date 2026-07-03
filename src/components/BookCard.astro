@@ -3,8 +3,7 @@ import type { Libro } from '../types';
 import BookCardPlaceholder from './BookCardPlaceholder.astro';
 import Icon from './Icon.astro';
 import { existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
+import { resolve } from 'node:path';
 
 const fotoRealModules = import.meta.glob('../assets/libros/*.{jpg,jpeg,png,webp}', { eager: true });
 
@@ -21,12 +20,11 @@ const getFotoRealSrc = (fotoReal: string) => {
 
 const fotoRealSrc = libro.fotoReal ? getFotoRealSrc(libro.fotoReal) : null;
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const projectRoot = resolve(__dirname, '../..');
-
+// En build time, process.cwd() apunta al root del proyecto. En runtime
+// (Node 18+), el archivo `public/` se copia a `dist/` como `public/`
+// y se sirve desde ahí, pero el original sigue accesible en cwd.
 const coverExists = libro.cover
-  ? existsSync(resolve(projectRoot, 'public', libro.cover.src.replace(/^\//, '')))
+  ? existsSync(resolve(process.cwd(), 'public', libro.cover.src.replace(/^\//, '')))
   : false;
 
 const formatPrice = (precio: number) => {

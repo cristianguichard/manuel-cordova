@@ -7,14 +7,8 @@ interface Car {
   transmision: string;
   dueno: string;
   mantenciones: string;
-  precio:
-    | {
-        con_mantencion: number;
-        sin_mantencion: number;
-        moneda: string;
-        nota_mantencion: string;
-      }
-    | null;
+  precio?: number | null;
+  moneda?: string;
 }
 
 interface Props {
@@ -106,34 +100,14 @@ const iconProps = {
       </h2>
     </header>
 
-    {car.precio && (
+    {car.precio != null && car.moneda && (
       <div class="mb-10 p-6 md:p-8 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-2xl">
         <p class="text-[10px] uppercase tracking-[0.3em] text-[var(--color-text-soft)] mb-4">
-          Forma de pago
+          Precio
         </p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-          <div class="p-5 md:p-6 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-xl">
-            <p class="text-[11px] uppercase tracking-[0.18em] text-[var(--color-text-soft)] mb-2">
-              Con mantención preventiva
-            </p>
-            <p class="font-bold text-2xl md:text-3xl text-[var(--color-text)] leading-none">
-              {formatPrice(car.precio.con_mantencion, car.precio.moneda)}
-            </p>
-          </div>
-
-          <div class="p-5 md:p-6 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-xl">
-            <p class="text-[11px] uppercase tracking-[0.18em] text-[var(--color-text-soft)] mb-2">
-              Mantención a cargo del comprador
-            </p>
-            <p class="font-bold text-2xl md:text-3xl text-[var(--color-text)] leading-none">
-              {formatPrice(car.precio.sin_mantencion, car.precio.moneda)}
-            </p>
-          </div>
-        </div>
-
-        <p class="mt-5 text-sm text-[var(--color-text-muted)] leading-relaxed">
-          {car.precio.nota_mantencion}
+        <p class="font-bold text-3xl md:text-4xl text-[var(--color-text)] leading-none">
+          {formatPrice(car.precio, car.moneda)}
         </p>
       </div>
     )}

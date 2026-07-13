@@ -5,14 +5,8 @@ interface CarInfo {
   marca: string;
   modelo: string;
   anio: number;
-  precio?:
-    | {
-        con_mantencion: number;
-        sin_mantencion: number;
-        moneda: string;
-        nota_mantencion: string;
-      }
-    | null;
+  precio?: number | null;
+  moneda?: string;
 }
 
 interface Contact {
@@ -75,16 +69,13 @@ const formatPrice = (value: number, currency: string) =>
         {car.anio}
       </p>
 
-      {car.precio && (
+      {car.precio != null && car.moneda && (
         <div class="mb-10 inline-flex flex-col gap-1 px-5 py-3 rounded-2xl bg-black/40 backdrop-blur-sm border border-white/15">
           <p class="text-[10px] uppercase tracking-[0.3em] text-white/70">
-            Oferta con mantención incluida
+            Precio
           </p>
           <p class="font-bold text-white text-2xl md:text-3xl leading-none">
-            {formatPrice(car.precio.con_mantencion, car.precio.moneda)}
-          </p>
-          <p class="text-xs text-white/70">
-            Si prefiere hacer la mantención por su cuenta: {formatPrice(car.precio.sin_mantencion, car.precio.moneda)}
+            {formatPrice(car.precio, car.moneda)}
           </p>
         </div>
       )}

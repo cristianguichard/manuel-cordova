@@ -15,12 +15,18 @@
     "transmision": "Automático",
     "dueno": "Única dueña",
     "mantenciones": "Hechas en Nissan",
-    "precio": null,
+    "precio": {
+      "con_mantencion": 10500000,
+      "sin_mantencion": 10000000,
+      "moneda": "CLP",
+      "nota_mantencion": "Precio con mantención preventiva hecha por Karime. Si prefiere hacerla por su cuenta: $10.000.000."
+    },
     "destacado": [
       "Única dueña",
       "Mantenciones al día en Nissan",
       "Transmisión automática",
-      "86.000 km"
+      "86.000 km",
+      "Dos opciones de precio según mantención"
     ]
   },
   "contact": {

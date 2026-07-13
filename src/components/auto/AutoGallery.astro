@@ -1,0 +1,74 @@
+---
+interface PhotoEntry {
+  name: string;
+  file: string;
+  alt: string;
+  isPrimary: boolean;
+  src: string;
+}
+
+interface Props {
+  photos: PhotoEntry[];
+}
+
+const { photos } = Astro.props;
+---
+
+<section class="py-14 md:py-20 px-5 md:px-8 bg-[var(--color-bg-subtle)]" aria-label="Galería de fotos">
+  <div class="max-w-6xl mx-auto">
+    <header class="mb-8 md:mb-12 text-center">
+      <p class="text-[10px] uppercase tracking-[0.3em] text-[var(--color-text-soft)] mb-2">
+        Fotos
+      </p>
+      <h2
+        class="font-bold tracking-tight text-[var(--color-text)] leading-tight"
+        style="font-size: clamp(1.75rem, 6vw, 2.5rem);"
+      >
+        Galería
+      </h2>
+      <p class="mt-3 text-sm md:text-base text-[var(--color-text-muted)]">
+        Toca una foto para verla en grande.
+      </p>
+    </header>
+
+    <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+      {photos.map((photo, index) => (
+        <li>
+          <button
+            type="button"
+            class="autogallery-thumb group block w-full overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] aspect-square focus:outline-none focus:ring-4 focus:ring-[var(--color-accent)]/40 focus:ring-offset-2 transition-transform hover:scale-[1.02]"
+            data-gallery-index={index}
+            aria-label={`Ver foto: ${photo.alt}`}
+          >
+            <img
+              src={photo.src}
+              alt={photo.alt}
+              class="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-90"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="600"
+            />
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<script>
+  // Mark the page as having a gallery so the page-level lightbox script
+  // can find both the trigger collection and the source list.
+  document.documentElement.dataset.galleryReady = 'true';
+  window.__AUTOGALLERY_PHOTOS__ =
+    Array.from(document.querySelectorAll<HTMLButtonElement>('.autogallery-thumb'))
+      .map((btn) => {
+        const img = btn.querySelector('img');
+        if (!img) return null;
+        return {
+          src: img.getAttribute('src') ?? '',
+          alt: img.getAttribute('alt') ?? '',
+        };
+      })
+      .filter((p): p is { src: string; alt: string } => p !== null);
+</script>

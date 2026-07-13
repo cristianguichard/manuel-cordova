@@ -1,0 +1,180 @@
+---
+interface Car {
+  marca: string;
+  modelo: string;
+  anio: number;
+  kilometraje: { value: number; unit: string };
+  transmision: string;
+  dueno: string;
+  mantenciones: string;
+  precio: { value: number; currency: string } | null;
+}
+
+interface Props {
+  car: Car;
+}
+
+const { car } = Astro.props;
+
+const formatKilometraje = (km: number) =>
+  new Intl.NumberFormat('es-CL').format(km);
+
+const formatPrice = (precio: { value: number; currency: string }) =>
+  new Intl.NumberFormat('es-CL', {
+    style: 'currency',
+    currency: precio.currency,
+    maximumFractionDigits: 0,
+  }).format(precio.value);
+
+type Spec = {
+  label: string;
+  value: string;
+  icon: 'marca' | 'modelo' | 'anio' | 'km' | 'transmision' | 'dueno' | 'mantenciones';
+};
+
+const specs: Spec[] = [
+  {
+    label: 'Marca',
+    value: car.marca,
+    icon: 'marca',
+  },
+  {
+    label: 'Modelo',
+    value: car.modelo,
+    icon: 'modelo',
+  },
+  {
+    label: 'Año',
+    value: String(car.anio),
+    icon: 'anio',
+  },
+  {
+    label: 'Kilometraje',
+    value: `${formatKilometraje(car.kilometraje.value)} ${car.kilometraje.unit}`,
+    icon: 'km',
+  },
+  {
+    label: 'Transmisión',
+    value: car.transmision,
+    icon: 'transmision',
+  },
+  {
+    label: 'Dueña',
+    value: car.dueno,
+    icon: 'dueno',
+  },
+  {
+    label: 'Mantenciones',
+    value: car.mantenciones,
+    icon: 'mantenciones',
+  },
+];
+
+const stroke = 'currentColor';
+const iconProps = {
+  xmlns: 'http://www.w3.org/2000/svg',
+  fill: 'none',
+  stroke,
+  'stroke-width': '2',
+  'stroke-linecap': 'round',
+  'stroke-linejoin': 'round',
+  width: '22',
+  height: '22',
+  viewBox: '0 0 24 24',
+  'aria-hidden': 'true',
+};
+---
+
+<section class="py-14 md:py-20 px-5 md:px-8" aria-label="Especificaciones">
+  <div class="max-w-4xl mx-auto">
+    <header class="mb-8 md:mb-12">
+      <p class="text-[10px] uppercase tracking-[0.3em] text-[var(--color-text-soft)] mb-2">
+        Ficha técnica
+      </p>
+      <h2
+        class="font-bold tracking-tight text-[var(--color-text)] leading-tight"
+        style="font-size: clamp(1.75rem, 6vw, 2.5rem);"
+      >
+        Especificaciones
+      </h2>
+    </header>
+
+    {car.precio && (
+      <div class="mb-10 p-6 md:p-8 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-2xl">
+        <p class="text-[10px] uppercase tracking-[0.3em] text-[var(--color-text-soft)] mb-2">
+          Precio
+        </p>
+        <p class="font-bold text-3xl md:text-4xl text-[var(--color-text)]">
+          {formatPrice(car.precio)}
+        </p>
+      </div>
+    )}
+
+    <dl class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+      {specs.map((spec) => (
+        <div class="flex items-start gap-3 p-4 md:p-5 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-xl">
+          <span class="shrink-0 mt-0.5 text-[var(--color-accent)]">
+            {spec.icon === 'marca' && (
+              <svg {...iconProps}>
+                <path d="M12 2 4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6Z" />
+              </svg>
+            )}
+            {spec.icon === 'modelo' && (
+              <svg {...iconProps}>
+                <rect x="3" y="6" width="18" height="12" rx="2" />
+                <path d="M7 10h10" />
+              </svg>
+            )}
+            {spec.icon === 'anio' && (
+              <svg {...iconProps}>
+                <rect x="3" y="5" width="18" height="16" rx="2" />
+                <path d="M3 9h18" />
+                <path d="M8 3v4" />
+                <path d="M16 3v4" />
+              </svg>
+            )}
+            {spec.icon === 'km' && (
+              <svg {...iconProps}>
+                <path d="M12 14 12 4" />
+                <path d="m4 10 8 4 8-4" />
+                <path d="M6 18h12" />
+              </svg>
+            )}
+            {spec.icon === 'transmision' && (
+              <svg {...iconProps}>
+                <circle cx="12" cy="12" r="3" />
+                <path d="M12 1v3" />
+                <path d="M12 20v3" />
+                <path d="M4.2 4.2l2.1 2.1" />
+                <path d="M17.7 17.7l2.1 2.1" />
+                <path d="M1 12h3" />
+                <path d="M20 12h3" />
+                <path d="M4.2 19.8l2.1-2.1" />
+                <path d="M17.7 6.3l2.1-2.1" />
+              </svg>
+            )}
+            {spec.icon === 'dueno' && (
+              <svg {...iconProps}>
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" />
+              </svg>
+            )}
+            {spec.icon === 'mantenciones' && (
+              <svg {...iconProps}>
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z" />
+              </svg>
+            )}
+          </span>
+          <div class="min-w-0 flex-1">
+            <dt class="text-[11px] uppercase tracking-[0.18em] text-[var(--color-text-soft)] mb-1">
+              {spec.label}
+            </dt>
+            <dd class="font-semibold text-base text-[var(--color-text)] break-words">
+              {spec.value}
+            </dd>
+          </div>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>

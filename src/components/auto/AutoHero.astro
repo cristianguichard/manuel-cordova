@@ -1,0 +1,75 @@
+---
+import Icon from '../Icon.astro';
+
+interface CarInfo {
+  marca: string;
+  modelo: string;
+  anio: number;
+}
+
+interface Contact {
+  phone: string;
+  prefillMessage: string;
+}
+
+interface Props {
+  car: CarInfo;
+  primaryPhoto: { src: string; alt: string };
+  contact: Contact;
+}
+
+const { car, primaryPhoto, contact } = Astro.props;
+const whatsappText = encodeURIComponent(contact.prefillMessage);
+const whatsappUrl = `https://wa.me/${contact.phone}?text=${whatsappText}`;
+---
+
+<section
+  class="relative w-full min-h-[100svh] flex items-end overflow-hidden"
+  aria-label="Hero"
+>
+  <img
+    src={primaryPhoto.src}
+    alt={primaryPhoto.alt}
+    class="absolute inset-0 w-full h-full object-cover"
+    loading="eager"
+    fetchpriority="high"
+    decoding="async"
+    width="1200"
+    height="900"
+  />
+  <div
+    class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black/85"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative z-10 w-full px-5 md:px-8 pb-12 md:pb-20 pt-24 animate-fade-in-up">
+    <div class="max-w-3xl">
+      <p class="text-[10px] uppercase tracking-[0.3em] text-white/70 mb-3">
+        Venta particular
+      </p>
+      <p class="text-white/90 font-semibold text-2xl md:text-3xl mb-2">
+        {car.marca}
+      </p>
+      <h1
+        class="font-bold tracking-tight text-white leading-[0.95] uppercase mb-3"
+        style="font-size: clamp(2.75rem, 12vw, 6rem);"
+      >
+        {car.modelo}
+      </h1>
+      <p class="text-white/80 font-medium text-xl md:text-2xl mb-10">
+        {car.anio}
+      </p>
+
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-3 bg-[var(--color-whatsapp)] text-white px-7 py-4 rounded-full font-semibold text-lg shadow-2xl hover:opacity-90 transition-opacity focus:outline-none focus:ring-4 focus:ring-white/40 min-h-[56px]"
+        aria-label="Contactar por WhatsApp sobre el Nissan Kicks 2018"
+      >
+        <Icon name="whatsapp" size={22} />
+        <span>Contactar por WhatsApp</span>
+      </a>
+    </div>
+  </div>
+</section>

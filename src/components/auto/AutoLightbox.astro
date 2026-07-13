@@ -1,0 +1,224 @@
+---
+// Standalone lightbox overlay. Self-contained: it binds to the gallery
+// triggers exposed by `AutoGallery.astro` via `window.__AUTOGALLERY_PHOTOS__`
+// and `[data-gallery-index]` buttons.
+---
+
+<div
+  id="auto-lightbox"
+  class="fixed inset-0 z-[60] hidden bg-black/90 backdrop-blur-sm items-center justify-center"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Galería de fotos"
+  aria-hidden="true"
+>
+  <button
+    type="button"
+    id="auto-lightbox-close"
+    class="absolute top-4 right-4 md:top-6 md:right-6 w-11 h-11 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white focus:outline-none focus:ring-4 focus:ring-white/40 transition-colors"
+    aria-label="Cerrar galería"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </svg>
+  </button>
+
+  <button
+    type="button"
+    id="auto-lightbox-prev"
+    class="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 w-11 h-11 md:w-14 md:h-14 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white focus:outline-none focus:ring-4 focus:ring-white/40 transition-colors"
+    aria-label="Foto anterior"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="m15 18-6-6 6-6" />
+    </svg>
+  </button>
+
+  <button
+    type="button"
+    id="auto-lightbox-next"
+    class="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 w-11 h-11 md:w-14 md:h-14 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white focus:outline-none focus:ring-4 focus:ring-white/40 transition-colors"
+    aria-label="Foto siguiente"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  </button>
+
+  <figure class="relative max-w-5xl w-[92vw] max-h-[85vh] flex flex-col items-center justify-center">
+    <img
+      id="auto-lightbox-img"
+      src=""
+      alt=""
+      class="max-w-full max-h-[80vh] object-contain rounded-md shadow-2xl"
+      decoding="async"
+    />
+    <figcaption
+      id="auto-lightbox-caption"
+      class="mt-3 text-sm md:text-base text-white/80 text-center"
+    ></figcaption>
+    <span
+      id="auto-lightbox-counter"
+      class="mt-1 text-xs md:text-sm text-white/60 tabular-nums"
+      aria-live="polite"
+    ></span>
+  </figure>
+</div>
+
+<script>
+  (() => {
+    type Photo = { src: string; alt: string };
+
+    const root = document.getElementById('auto-lightbox');
+    if (!root) return;
+
+    const imgEl = document.getElementById('auto-lightbox-img') as HTMLImageElement | null;
+    const captionEl = document.getElementById('auto-lightbox-caption');
+    const counterEl = document.getElementById('auto-lightbox-counter');
+    const closeBtn = document.getElementById('auto-lightbox-close');
+    const prevBtn = document.getElementById('auto-lightbox-prev');
+    const nextBtn = document.getElementById('auto-lightbox-next');
+
+    if (!imgEl || !captionEl || !counterEl || !closeBtn || !prevBtn || !nextBtn) return;
+
+    // Collect photos from gallery. The gallery component exposes
+    // `window.__AUTOGALLERY_PHOTOS__` synchronously (it runs in a separate
+    // script tag whose order is preserved by Astro at module scope). If
+    // for some reason the gallery script hasn't run yet, we read directly
+    // from the DOM as a fallback.
+    const photos: Photo[] =
+      (window as unknown as { __AUTOGALLERY_PHOTOS__?: Photo[] }).__AUTOGALLERY_PHOTOS__ ??
+      (() => {
+        return Array.from(
+          document.querySelectorAll<HTMLButtonElement>('.autogallery-thumb img'),
+        ).map((img) => ({
+          src: img.getAttribute('src') ?? '',
+          alt: img.getAttribute('alt') ?? '',
+        }));
+      })();
+
+    let currentIndex = 0;
+    let lastFocused: HTMLElement | null = null;
+
+    const focusableSelectors =
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+    const show = (index: number) => {
+      if (photos.length === 0) return;
+      const safe = (index + photos.length) % photos.length;
+      currentIndex = safe;
+      const photo = photos[safe]!;
+      imgEl!.src = photo.src;
+      imgEl!.alt = photo.alt;
+      captionEl!.textContent = photo.alt;
+      counterEl!.textContent = `${safe + 1} / ${photos.length}`;
+    };
+
+    const open = (index: number) => {
+      if (photos.length === 0) return;
+      lastFocused = document.activeElement as HTMLElement | null;
+      show(index);
+      root!.classList.remove('hidden');
+      root!.classList.add('flex');
+      root!.setAttribute('aria-hidden', 'false');
+      document.body.dataset['lightbox'] = 'open';
+      document.body.style.overflow = 'hidden';
+      // Move focus inside the dialog for accessibility
+      window.requestAnimationFrame(() => closeBtn!.focus());
+    };
+
+    const close = () => {
+      root!.classList.add('hidden');
+      root!.classList.remove('flex');
+      root!.setAttribute('aria-hidden', 'true');
+      delete document.body.dataset['lightbox'];
+      document.body.style.overflow = '';
+      if (lastFocused && typeof lastFocused.focus === 'function') {
+        lastFocused.focus();
+      }
+    };
+
+    const next = () => show(currentIndex + 1);
+    const prev = () => show(currentIndex - 1);
+
+    // Click delegation: any thumbnail trigger opens the lightbox at the
+    // right index.
+    document.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement | null;
+      if (!target) return;
+      const trigger = target.closest<HTMLElement>('[data-gallery-index]');
+      if (!trigger) return;
+      const idxAttr = trigger.getAttribute('data-gallery-index');
+      if (idxAttr === null) return;
+      const idx = Number.parseInt(idxAttr, 10);
+      if (Number.isNaN(idx)) return;
+      event.preventDefault();
+      open(idx);
+    });
+
+    closeBtn.addEventListener('click', close);
+    prevBtn.addEventListener('click', prev);
+    nextBtn.addEventListener('click', next);
+
+    // Click on backdrop closes (but not on figure/image/buttons).
+    root.addEventListener('click', (event) => {
+      if (event.target === root) close();
+    });
+
+    // Keyboard: Esc closes, arrows navigate, Tab traps focus inside dialog.
+    document.addEventListener('keydown', (event) => {
+      if (root.classList.contains('hidden')) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        close();
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        next();
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        prev();
+      } else if (event.key === 'Tab') {
+        // Simple focus trap: cycle within the dialog.
+        const focusables = Array.from(
+          root.querySelectorAll<HTMLElement>(focusableSelectors),
+        ).filter((el) => !el.hasAttribute('disabled') && el.offsetParent !== null);
+        if (focusables.length === 0) return;
+        const first = focusables[0]!;
+        const last = focusables[focusables.length - 1]!;
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    // Touch swipe for mobile.
+    let touchStartX = 0;
+    let touchEndX = 0;
+    root.addEventListener(
+      'touchstart',
+      (event) => {
+        const t = (event as TouchEvent).changedTouches[0];
+        if (t) touchStartX = t.clientX;
+      },
+      { passive: true },
+    );
+    root.addEventListener(
+      'touchend',
+      (event) => {
+        const t = (event as TouchEvent).changedTouches[0];
+        if (!t) return;
+        touchEndX = t.clientX;
+        const dx = touchEndX - touchStartX;
+        if (Math.abs(dx) < 50) return;
+        if (dx < 0) next();
+        else prev();
+      },
+      { passive: true },
+    );
+  })();
+</script>

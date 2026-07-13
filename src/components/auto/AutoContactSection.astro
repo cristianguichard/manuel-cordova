@@ -1,0 +1,54 @@
+---
+import Icon from '../Icon.astro';
+
+interface Contact {
+  phone: string;
+  ownerName: string;
+  prefillMessage: string;
+}
+
+interface Props {
+  contact: Contact;
+}
+
+const { contact } = Astro.props;
+const whatsappText = encodeURIComponent(contact.prefillMessage);
+const whatsappUrl = `https://wa.me/${contact.phone}?text=${whatsappText}`;
+---
+
+<section
+  class="py-16 md:py-24 px-5 md:px-8"
+  aria-label="Contactar"
+>
+  <div class="max-w-3xl mx-auto">
+    <div class="bg-[var(--color-bg)] text-[var(--color-text)] border border-[var(--color-border)] rounded-3xl p-8 md:p-12 shadow-2xl">
+      <p class="text-[10px] uppercase tracking-[0.3em] text-[var(--color-text-soft)] mb-3">
+        ¿Te interesa?
+      </p>
+      <h2
+        class="font-bold tracking-tight leading-tight mb-4"
+        style="font-size: clamp(1.75rem, 6vw, 2.5rem);"
+      >
+        Contactar directamente
+      </h2>
+      <p class="text-[var(--color-text-muted)] leading-relaxed mb-8 max-w-xl">
+        Escríbeme a {contact.ownerName} por WhatsApp. Te respondo a la brevedad.
+      </p>
+
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="w-full md:w-auto inline-flex items-center justify-center gap-3 bg-[var(--color-whatsapp)] text-white px-8 py-5 rounded-full font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity focus:outline-none focus:ring-4 focus:ring-[var(--color-whatsapp)]/40 min-h-[60px]"
+        aria-label="Contactar por WhatsApp"
+      >
+        <Icon name="whatsapp" size={24} />
+        <span>Abrir WhatsApp</span>
+      </a>
+
+      <p class="mt-6 text-sm text-[var(--color-text-soft)]">
+        Mensaje predefinido: <em>“{contact.prefillMessage}”</em>
+      </p>
+    </div>
+  </div>
+</section>

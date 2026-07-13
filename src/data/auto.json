@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "slug": "auto",
+    "title": "Nissan Kicks 2018 — Manuel Córdova",
+    "description": "Nissan Kicks 2018, automático, 86.000 km, única dueña, mantenciones al día en Nissan. Contacto directo por WhatsApp."
+  },
+  "car": {
+    "marca": "Nissan",
+    "modelo": "Kicks",
+    "anio": 2018,
+    "kilometraje": {
+      "value": 86000,
+      "unit": "km"
+    },
+    "transmision": "Automático",
+    "dueno": "Única dueña",
+    "mantenciones": "Hechas en Nissan",
+    "precio": null,
+    "destacado": [
+      "Única dueña",
+      "Mantenciones al día en Nissan",
+      "Transmisión automática",
+      "86.000 km"
+    ]
+  },
+  "contact": {
+    "phone": "56992386580",
+    "ownerName": "Manuel Córdova",
+    "prefillMessage": "Hola Manuel, te escribo por el Nissan Kicks 2018"
+  },
+  "photos": [
+    {
+      "name": "front",
+      "file": "front.webp",
+      "alt": "Nissan Kicks 2018 — vista frontal",
+      "isPrimary": true
+    },
+    {
+      "name": "side",
+      "file": "side.webp",
+      "alt": "Nissan Kicks 2018 — vista lateral",
+      "isPrimary": false
+    },
+    {
+      "name": "rear",
+      "file": "rear.webp",
+      "alt": "Nissan Kicks 2018 — vista trasera",
+      "isPrimary": false
+    },
+    {
+      "name": "interior",
+      "file": "interior.webp",
+      "alt": "Nissan Kicks 2018 — interior",
+      "isPrimary": false
+    },
+    {
+      "name": "dashboard",
+      "file": "dashboard.webp",
+      "alt": "Nissan Kicks 2018 — tablero",
+      "isPrimary": false
+    },
+    {
+      "name": "engine",
+      "file": "engine.webp",
+      "alt": "Nissan Kicks 2018 — motor",
+      "isPrimary": false
+    },
+    {
+      "name": "detail-1",
+      "file": "detail-1.webp",
+      "alt": "Nissan Kicks 2018 — detalle",
+      "isPrimary": false
+    },
+    {
+      "name": "detail-2",
+      "file": "detail-2.webp",
+      "alt": "Nissan Kicks 2018 — detalle adicional",
+      "isPrimary": false
+    }
+  ]
+}

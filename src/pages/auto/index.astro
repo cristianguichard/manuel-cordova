@@ -7,30 +7,29 @@ import AutoLightbox from '../../components/auto/AutoLightbox.astro';
 import AutoContactSection from '../../components/auto/AutoContactSection.astro';
 import AutoFab from '../../components/auto/AutoFab.astro';
 import auto from '../../data/auto.json';
-import frontImg from '../../assets/auto/front.webp';
-import sideImg from '../../assets/auto/side.webp';
-import rearImg from '../../assets/auto/rear.webp';
-import interiorImg from '../../assets/auto/interior.webp';
-import dashboardImg from '../../assets/auto/dashboard.webp';
-import engineImg from '../../assets/auto/engine.webp';
-import detail1Img from '../../assets/auto/detail-1.webp';
-import detail2Img from '../../assets/auto/detail-2.webp';
 
-const photoByName: Record<string, string> = {
-  front: frontImg.src,
-  side: sideImg.src,
-  rear: rearImg.src,
-  interior: interiorImg.src,
-  dashboard: dashboardImg.src,
-  engine: engineImg.src,
-  'detail-1': detail1Img.src,
-  'detail-2': detail2Img.src,
-};
+// Dynamic, resilient import: only the WebPs that actually exist on disk are
+// bundled. The mapping is by basename (without extension) so adding/removing
+// photos in src/assets/auto/ never breaks the build.
+const photoModules = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/auto/*.webp',
+  { eager: true },
+);
 
-const photos = auto.photos.map((p) => ({
-  ...p,
-  src: photoByName[p.name] ?? '',
-}));
+const srcByBaseName: Record<string, string> = {};
+for (const [path, mod] of Object.entries(photoModules)) {
+  const fileName = path.split('/').pop() ?? '';
+  const base = fileName.replace(/\.webp$/i, '');
+  srcByBaseName[base] = mod.default.src;
+}
+
+const photos = auto.photos
+  .map((p) => {
+    const base = p.file.replace(/\.webp$/i, '');
+    const src = srcByBaseName[base];
+    return src ? { ...p, src } : null;
+  })
+  .filter((p): p is NonNullable<typeof p> => p !== null);
 
 const primary = photos.find((p) => p.isPrimary) ?? photos[0];
 ---
@@ -38,8 +37,14 @@ const primary = photos.find((p) => p.isPrimary) ?? photos[0];
 <AutoLayout
   title={auto.meta.title}
   description={auto.meta.description}
+  ogImage={primary?.src}
+  ogImageAlt={primary?.alt ?? ''}
 >
-  <AutoHero car={auto.car} primaryPhoto={primary} contact={auto.contact} />
+  <AutoHero
+    car={auto.car}
+    primaryPhoto={primary ?? { src: '', alt: '' }}
+    contact={auto.contact}
+  />
   <AutoSpecTable car={auto.car} />
   <AutoGallery photos={photos} />
   <AutoContactSection contact={auto.contact} />

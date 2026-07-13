@@ -2,13 +2,13 @@
 /**
  * process-auto-photos.mjs
  *
- * Reads JPEGs from `<project-root>/Material/fotos auto/` and writes
+ * Reads JPEGs/PNGs from `<project-root>/Material/fotos auto/` and writes
  * resized WebP files into `<project-root>/src/assets/auto/`.
  *
  * Behavior:
  *   - If the source filename already matches a semantic name (e.g. `front.jpeg`),
  *     it's used directly.
- *   - Otherwise, the script sorts the JPEGs alphabetically and maps them, in
+ *   - Otherwise, the script sorts the images alphabetically and maps them, in
  *     order, to: front, side, rear, interior, dashboard, engine, detail-1,
  *     detail-2. This lets the user keep WhatsApp-style filenames; they can also
  *     rename files manually for direct mapping.
@@ -44,18 +44,23 @@ const SEMANTIC_ORDER = [
 ];
 
 const SEMANTIC_NAME_SET = new Set(SEMANTIC_ORDER);
+// Aliases: filenames that aren't in SEMANTIC_ORDER but should map to a semantic
+// slot anyway (e.g. user-renamed `patente-oculta` for the front shot).
+const SEMANTIC_ALIASES = {
+  'patente-oculta': 'front',
+};
 
 const stripExt = (name) => name.replace(/\.[^.]+$/, '');
-const isJpeg = (name) => /\.(jpe?g)$/i.test(name);
+const isSupportedImage = (name) => /\.(jpe?g|png)$/i.test(name);
 
-async function listJpegs(dir) {
+async function listImages(dir) {
   let entries;
   try {
     entries = await readdir(dir);
   } catch (err) {
     throw new Error(`Cannot read source directory: ${dir}\n${err.message}`);
   }
-  return entries.filter(isJpeg).sort((a, b) => a.localeCompare(b, 'en'));
+  return entries.filter(isSupportedImage).sort((a, b) => a.localeCompare(b, 'en'));
 }
 
 async function buildMapping(files) {
@@ -66,6 +71,9 @@ async function buildMapping(files) {
     const base = stripExt(file).toLowerCase();
     if (SEMANTIC_NAME_SET.has(base)) {
       direct[base] = file;
+    } else if (SEMANTIC_ALIASES[base]) {
+      const slot = SEMANTIC_ALIASES[base];
+      direct[slot] = file;
     } else {
       remaining.push(file);
     }
@@ -79,7 +87,7 @@ async function buildMapping(files) {
       while (idx < SEMANTIC_ORDER.length && mapping[SEMANTIC_ORDER[idx]]) idx += 1;
       if (idx >= SEMANTIC_ORDER.length) {
         throw new Error(
-          `Too many JPEGs found. Expected at most ${SEMANTIC_ORDER.length}; got ${files.length}.`,
+          `Too many images found. Expected at most ${SEMANTIC_ORDER.length}; got ${files.length}.`,
         );
       }
       const name = SEMANTIC_ORDER[idx];
@@ -96,11 +104,11 @@ async function main() {
 
   await mkdir(OUTPUT_DIR, { recursive: true });
 
-  const files = await listJpegs(SOURCE_DIR);
+  const files = await listImages(SOURCE_DIR);
   if (files.length === 0) {
-    throw new Error('No JPEG files found in source directory.');
+    throw new Error('No JPEG/PNG files found in source directory.');
   }
-  console.log(`[photos] found ${files.length} JPEG file(s):`);
+  console.log(`[photos] found ${files.length} image file(s):`);
   for (const f of files) console.log(`  - ${f}`);
 
   const mapping = await buildMapping(files);

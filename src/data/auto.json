@@ -24,57 +24,45 @@
     ]
   },
   "contact": {
-    "phone": "56992386580",
-    "ownerName": "Manuel Córdova",
-    "prefillMessage": "Hola Manuel, te escribo por el Nissan Kicks 2018"
+    "phone": "56976681969",
+    "ownerName": "Karime",
+    "prefillMessage": "Hola Karime, te escribo por el Nissan Kicks 2018"
   },
   "photos": [
     {
       "name": "front",
       "file": "front.webp",
-      "alt": "Nissan Kicks 2018 — vista frontal",
+      "alt": "Nissan Kicks 2018 — vista frontal sin patente",
       "isPrimary": true
     },
     {
       "name": "side",
       "file": "side.webp",
-      "alt": "Nissan Kicks 2018 — vista lateral",
+      "alt": "Nissan Kicks 2018 — vista lateral sin patente",
       "isPrimary": false
     },
     {
       "name": "rear",
       "file": "rear.webp",
-      "alt": "Nissan Kicks 2018 — vista trasera",
+      "alt": "Nissan Kicks 2018 — vista trasera sin patente",
       "isPrimary": false
     },
     {
       "name": "interior",
       "file": "interior.webp",
-      "alt": "Nissan Kicks 2018 — interior",
+      "alt": "Nissan Kicks 2018 — interior sin patente",
       "isPrimary": false
     },
     {
       "name": "dashboard",
       "file": "dashboard.webp",
-      "alt": "Nissan Kicks 2018 — tablero",
+      "alt": "Nissan Kicks 2018 — tablero / dashboard",
       "isPrimary": false
     },
     {
       "name": "engine",
       "file": "engine.webp",
       "alt": "Nissan Kicks 2018 — motor",
-      "isPrimary": false
-    },
-    {
-      "name": "detail-1",
-      "file": "detail-1.webp",
-      "alt": "Nissan Kicks 2018 — detalle",
-      "isPrimary": false
-    },
-    {
-      "name": "detail-2",
-      "file": "detail-2.webp",
-      "alt": "Nissan Kicks 2018 — detalle adicional",
       "isPrimary": false
     }
   ]
